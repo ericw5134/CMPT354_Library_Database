@@ -50,6 +50,12 @@ def borrowitem():
     try: 
         cursor.execute(query, (transactionID, itemID, personID, borrowDate))
         conn.commit()
+        query = 'INSERT INTO FutureItem(futureItemID) VALUES(?)'
+        try:
+            cursor.execute(query, (itemID))
+            conn.commit()
+        except sqlite3.IntegrityError:
+            print("Error: could not add item to FutureItems")
     except sqlite3.IntegrityError:
         print("ERROR: There was a problem retrieving your item from the dabase!\n")
 

@@ -29,6 +29,7 @@ borrowitem():
 * The function then asks user to enter some information using input(). Moreover, the borrowDate value will be today's date using the .today() function from the datetime library.
 * A query is then executed using the user's input as parameters to register the user if needed.
 * A query is then executed using the user's input as parameters to register the user's action into BorrowTransaction table.
+* A query is then executed using the user's input as parameters to register the itemID into FutureItem table.
 
 returnitem()
 * First, check if connnection to the database was established. Program terminates if connection was not established.
@@ -66,8 +67,7 @@ volunteer()
 * An error message will play if insertion failed.
 
 ## Running
-First run the **hw5.ipynb** file in Jupyter Notebook to create the .db file
-Then run main.py
+First run the **hw5.ipynb** file in Jupyter Notebook to create the .db file then run main.py
 * This project uses a CLI. Simply follow the printed messages in your terminal. 
 
 ## Installation
