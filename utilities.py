@@ -70,12 +70,30 @@ def returnitem():
         return
 
     transactionID = input("What was the transactionID you were provided: ")
+    itemID = None
 
     cursor = conn.cursor()
+    query = "SELECT itemID FROM BorrowTransaction WHERE transactionID=:input"
+    try: 
+        cursor.execute(query, {"input": transactionID})
+        result = cursor.fetchall()
+        if result:
+            itemID = int(result[0][0]) 
+        else:
+            pass
+        print(itemID)
+    except sqlite3.IntegrityError:
+        if itemID == None:
+            print("Error: The item you entered does not exist")  
     query = "DELETE FROM BorrowTransaction WHERE transactionID=:input"
     try:
         cursor.execute(query, {"input": transactionID})
         conn.commit()
+        query = "DELETE FROM FutureItem WHERE futureItemID=:input"
+        try: 
+            cursor.execute(query, {"input": itemID})
+        except sqlite3.IntegrityError:
+            print("item was not found in futureitem")
     except sqlite3.IntegrityError:
         Print("Error: This item was never borrowed")
     
