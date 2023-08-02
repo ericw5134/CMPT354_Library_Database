@@ -10,7 +10,7 @@ def create_tables():
     # Create Item table
     cursor.execute('''
     CREATE TABLE Item (
-        itemID INTEGER,
+        itemID INTEGER NOT NULL,
         itemType VARCHAR(30),
         title VARCHAR(30),
         author VARCHAR(30),
@@ -24,7 +24,7 @@ def create_tables():
     # Create Person table
     cursor.execute('''
     CREATE TABLE Person (
-        personID INTEGER,
+        personID INTEGER NOT NULL,
         firstName VARCHAR(20),
         lastName VARCHAR(20),
         contactNumber VARCHAR(20) UNIQUE,
@@ -36,7 +36,7 @@ def create_tables():
     # Create BorrowTransaction table
     cursor.execute('''
         CREATE TABLE BorrowTransaction (
-        transactionID INTEGER,
+        transactionID INTEGER NOT NULL,
         itemID INTEGER,
         personID INTEGER,
         borrowDate DATE,
@@ -52,7 +52,7 @@ def create_tables():
     # Create Event table
     cursor.execute('''
     CREATE TABLE Event (
-        eventID INTEGER,
+        eventID INTEGER NOT NULL,
         eventType VARCHAR(20),
         eventPrice INTEGER CHECK (eventPrice >= 0),
         socialRoom VARCHAR(20),
@@ -63,7 +63,7 @@ def create_tables():
     # Create eventAudiences table
     cursor.execute('''
     CREATE TABLE eventAudiences (
-        eventID INTEGER,
+        eventID INTEGER NOT NULL,
         audienceID INTEGER,
         FOREIGN KEY(audienceID) REFERENCES Person(PersonID),
         FOREIGN KEY(eventID) REFERENCES Event(eventID)
@@ -73,7 +73,7 @@ def create_tables():
     # Create Personnel table
     cursor.execute('''
     CREATE TABLE Personnel (
-        personnelID INTEGER,
+        personnelID INTEGER NOT NULL,
         jobTitle VARCHAR(20),
         FOREIGN KEY(personnelID) REFERENCES Person(personID)
     )
@@ -82,7 +82,7 @@ def create_tables():
     # Create FutureItem table
     cursor.execute('''
     CREATE TABLE FutureItem (
-        futureItemID INTEGER,
+        futureItemID INTEGER NOT NULL,
         FOREIGN KEY(futureItemID) REFERENCES Item(itemID)
     )
     ''')
@@ -208,16 +208,16 @@ def insert_data():
     cursor.executemany('''
     INSERT INTO Event VALUES (?, ?, ?, ?)
     ''', [
-        (1, 'Story Telling Session', 50, 'Hall A'),
-        (2, 'Elementry Math Seminar', 50, 'Hall C'),
+        (1, 'Story Telling Session', 0, 'Hall A'),
+        (2, 'Elementry Math Seminar', 0, 'Hall C'),
         (3, 'Indigenous Culture Learning Day', 0, 'Hall A'),
-        (4, 'College Calculus Workshop', 25, 'Hall C'),
-        (5, 'High School Chemistry Tutoring', 100, 'Hall c'),
-        (6, 'High School Physics Tutoring', 100, 'Hall C'),
+        (4, 'College Calculus Workshop', 0, 'Hall C'),
+        (5, 'High School Chemistry Tutoring', 0, 'Hall c'),
+        (6, 'High School Physics Tutoring', 0, 'Hall C'),
         (7, 'Monthly Employee Meeting', 0, 'Hall F'),
-        (8, 'Woodworking Workshop', 30, 'Hall C'),
+        (8, 'Woodworking Workshop', 0, 'Hall C'),
         (9, 'Drawing Competition', 0, 'Hall G'),
-        (10, 'Poetry Competition', 15, 'Hall G')
+        (10, 'Poetry Competition', 0, 'Hall G')
     ])
 
     # Insert example tuples into eventAudiences table

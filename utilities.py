@@ -31,8 +31,9 @@ def borrowitem():
         return
 
     transactionID = random.randint(1, 1000000)
+    print("------------------------------------------------------------------------")
     itemID = input("Enter the itemID of the item you are borrowing: ")
-    personID = input("Enter your personID: ")
+    personID = input("Enter your personID (pick new non-existed ID if not registered): ")
     firstName = input("What is your first name: ")
     lastName = input("What is your last name: ")
     contactNumber = input("What is your contact number (xxx-xxx-xxxx format): ")
@@ -44,7 +45,9 @@ def borrowitem():
     try:
         cursor.execute(query, (personID, firstName, lastName, contactNumber, email))
         conn.commit()
+        print("Hi", firstName, ". A new user account is registered for you.", sep="")
     except sqlite3.IntegrityError:  # this person's personID is already in database 
+        print("Welcome back ", firstName, ". We found your account in the system.", sep="")
         pass
     query = "INSERT INTO BorrowTransaction(transactionID, itemID, personID, borrowDate, returnDate, fineAmount) VALUES(?, ?, ?, ?, NULL, NULL)"
     try: 
@@ -52,7 +55,7 @@ def borrowitem():
         conn.commit()
         query = 'INSERT INTO FutureItem(futureItemID) VALUES(?)'
         try:
-            cursor.execute(query, (itemID))
+            cursor.execute(query, (itemID,))
             conn.commit()
         except sqlite3.IntegrityError:
             print("Error: could not add item to FutureItems")
@@ -157,7 +160,7 @@ def regirster():
         return   
 
     eventID = input("Enter the eventID of the event you want to register for: ")
-    audienceID = input("Enter you personID to register: ")
+    audienceID = input("Enter you personID to register (pick new non-existed ID if not registered): ")
     firstName = input("What is your first name: ")
     lastName = input("What is your last name: ")
     contactNumber = input("What is your contact number (xxx-xxx-xxxx format): ")
@@ -166,14 +169,17 @@ def regirster():
     cursor = conn.cursor()
     query = "INSERT INTO Person(personID, firstName, lastName, contactNumber, email) VALUES(?,?,?,?,?)"
     try:
-        cursor.execute(query, (personID, firstName, lastName, contactNumber, email))
+        cursor.execute(query, (audienceID, firstName, lastName, contactNumber, email))
         conn.commit()
+        print("Hi", firstName, ". A new user account is registered for you.", sep="")
     except sqlite3.IntegrityError:  # this person's personID is already in database 
+        print("Welcome back ", firstName, ". We found your account in the system.", sep="")
         pass
     query = "INSERT INTO EventAudiences(eventID, audienceID) VALUES(?,?)"
     try:
         cursor.execute(query, (eventID, audienceID))
         conn.commit()
+        print("You have been successfully registered for event ID ", eventID, ".", sep="")
     except sqlite3.IntegrityError:
         print("Error: A problem occured during registeration.")
 
@@ -187,8 +193,8 @@ def volunteer():
         print("Failed to connect to database, exiting program")
         return
     
-    print("Thank you! Let's collect some personal information first.")
-    personID = input("What is your personID: ")
+    print("Thank you for joining! Let's collect some personal information first.\n------------------------------------------------------------------------")
+    personID = input("What is your personID (pick new non-existed ID if not registered): ")
     firstName = input("What is your first name: ")
     lastName = input("What is your last name: ")
     contactNumber = input("What is your contact number (xxx-xxx-xxxx format): ")
@@ -212,6 +218,32 @@ def volunteer():
     # conn.close()
 
     return
+
+def ask_librarian_for_help():
+    if not conn:
+        print("Failed to connect to database, exiting program")
+        return   
+
+    staffID=input("Enter the staffID of the volunteer: ")
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM Personnel WHERE personnelID =:input"
+    try: 
+        cursor.execute(query, {"input": staffID})
+    except sqlite3.IntegrityError:
+        print("Sorry, staff not found.")
+    staff = cursor.fetchall()
+    print("\n", staff[0][1], " with ID ", staff[0][0], " is called. Just a moment.", sep="")
+
+    return
+
+
+    # result=cursor.execute('SELECT * FROM Personnel WHERE personnelID = ?', ('%' + staffID + '%',))
+    # result = cursor.fetchall()
+    # if not result:
+    #     print("staff not found.")
+    # else:
+    #     print(result)
 
 
 
