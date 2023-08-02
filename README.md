@@ -66,7 +66,9 @@ volunteer()
 * An error message will play if insertion failed.
 
 ## Running
-This project uses a CLI. Simply run main.py, and follow the printed messages. 
+First run the **hw5.ipynb** file in Jupyter Notebook to create the .db file
+Then run main.py
+* This project uses a CLI. Simply follow the printed messages in your terminal. 
 
 ## Installation
 Via https
