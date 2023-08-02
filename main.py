@@ -1,57 +1,67 @@
 import sqlite3
 from utilities import finditem, borrowitem, returnitem, donateitem, findevent, regirster, volunteer
 
-actions = ["find item", "borrow item", "return item", "donate item", "find event", 
-"register for event", "volunteer for us"]
-keywords = ["findItem", "borrow", "return", "donate", "findEvent", 
-"register", "volunteer"]
+def main():
+    actions = ["find item", "borrow item", "return item", "donate item", "find event", 
+    "register for event", "volunteer for us", "exist program"]
+    keywords = ["findItem", "borrow", "return", "donate", "findEvent", 
+    "register", "volunteer", "quit"]
 
-print("List of actions below")
-for i in range(7):
-    print(actions[i] + " uses keyword: " + keywords[i])
+    print("\nWelcome to the library! Here are List of actions below:\n")
 
-userAction = input("what would you like to do (enter keyword): ") 
-print("\n")
+    while True:
+        for i in range(1,9):
+            print("   ", i, ". ", actions[i-1], sep='')
+        print("\n")
 
-if userAction == "findItem":
-    foundItem = finditem()
-    if foundItem:
-        for i in range(len(foundItem)):
-            print(foundItem[i])
-    else:
-        print("ERROR: Failed to find item")
-    print("Ok, everything is done. Thank you for your time!")
+        userAction = input("what would you like to do (enter number 1~8): ") 
+        print("\n")
 
-elif userAction == "borrow":
-    transactionID = borrowitem()
-    print("Your TransactionID is: " + str(transactionID) + ", please remember it.")
-    print("Ok, everything is done. Thank you for your time!")
+        if userAction == '1':
+            foundItem = finditem()
+            if foundItem:
+                for i in range(len(foundItem)):
+                    print("\n   ", foundItem[i], sep='')
+            else:
+                print("ERROR: Failed to find item")
+            print("\nAnything more we can assist with? Here are list of actions below\n")
 
-elif userAction == "return":
-    returnitem() 
-    print("Ok, everything is done. Thank you for your time!")
+        elif userAction == '2':
+            transactionID = borrowitem()
+            print("Your TransactionID is: " + str(transactionID) + ", please remember it.")
+            print("\nAnything more we can assist with? Here are list of actions below\n")
 
-elif userAction == "donate":
-    itemID = donateitem()
-    print("Your itemID is: " + str(itemID) + ", please remember it.")
-    print("Ok, everything is done. Thank you for your time!")
+        elif userAction == '3':
+            returnitem() 
+            print("\nAnything more we can assist with? Here are list of actions below\n")
 
-elif userAction == "findEvent":
-    foundevent = findevent()
-    if foundevent:
-        for i in range(len(foundevent)):
-            print(foundevent[i])
-    else:
-        print("ERROR: Failed to find event")
-    print("Ok, everything is done. Thank you for your time!")
+        elif userAction == '4':
+            itemID = donateitem()
+            print("Your itemID is: " + str(itemID) + ", please remember it.")
+            print("\nAnything more we can assist with? Here are list of actions below\n")
 
-elif userAction == "register":
-    regirster()
-    print("Ok, everything is done. Thank you for your time!")
+        elif userAction == '5':
+            foundevent = findevent()
+            if foundevent:
+                for i in range(len(foundevent)):
+                    print(foundevent[i])
+            else:
+                print("ERROR: Failed to find event")
+            print("\nAnything more we can assist with? Here are list of actions below\n")
 
-elif userAction == "volunteer":
-    volunteer()
-    print("Ok, everything is done. Thank you for your time!")
+        elif userAction == '6':
+            regirster()
+            print("\nAnything more we can assist with? Here are list of actions below\n")
 
-else:
-    print("ERROR: Keyword not detected")
+        elif userAction == '7':
+            volunteer()
+            print("\nAnything more we can assist with? Here are list of actions below\n")
+
+        elif userAction == '8':
+            return
+
+        else:
+            print("ERROR: Keyword not detected")
+
+if __name__ == "__main__":
+    main()

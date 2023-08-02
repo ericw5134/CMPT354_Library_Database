@@ -20,7 +20,7 @@ def finditem():
         print("Error: This item is not in our database")
     item = cursor.fetchall()
 
-    conn.close()
+    # conn.close()
 
     return item
 
@@ -59,7 +59,7 @@ def borrowitem():
     except sqlite3.IntegrityError:
         print("ERROR: There was a problem retrieving your item from the dabase!\n")
 
-    conn.close()
+    # conn.close()
 
     return transactionID
 
@@ -97,7 +97,7 @@ def returnitem():
     except sqlite3.IntegrityError:
         Print("Error: This item was never borrowed")
     
-    conn.close()
+    # conn.close()
     return
 
 def donateitem():
@@ -126,7 +126,7 @@ def donateitem():
     except sqlite3.IntegrityError:
         print("ERROR: There was a problem adding your item to the dabase!\n")
     
-    conn.close()
+    # conn.close()
 
     return itemID
 
@@ -146,7 +146,7 @@ def findevent():
         print("Error: Could not find this event.")
     event = cursor.fetchall()
 
-    conn.close()
+    # conn.close()
 
     return event
 
@@ -177,7 +177,7 @@ def regirster():
     except sqlite3.IntegrityError:
         print("Error: A problem occured during registeration.")
 
-    conn.close()
+    # conn.close()
 
     return
 
@@ -209,9 +209,10 @@ def volunteer():
     except sqlite3.IntegrityError:
         print("ERROR: There was a problem adding your information to the dabase!\n")
     
-    conn.close()
+    # conn.close()
 
     return
+
 
 
 
