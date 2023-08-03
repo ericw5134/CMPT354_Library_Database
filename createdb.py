@@ -66,15 +66,17 @@ def create_tables():
         eventID INTEGER NOT NULL,
         audienceID INTEGER,
         FOREIGN KEY(audienceID) REFERENCES Person(PersonID),
-        FOREIGN KEY(eventID) REFERENCES Event(eventID)
+        FOREIGN KEY(eventID) REFERENCES Event(eventID),
+        PRIMARY KEY (eventID, audienceID)
     )
     ''')
 
     # Create Personnel table
     cursor.execute('''
     CREATE TABLE Personnel (
-        personnelID INTEGER NOT NULL,
+        personnelID INTEGER,
         jobTitle VARCHAR(20),
+        PRIMARY KEY (personnelID),
         FOREIGN KEY(personnelID) REFERENCES Person(personID)
     )
     ''')
@@ -83,6 +85,7 @@ def create_tables():
     cursor.execute('''
     CREATE TABLE FutureItem (
         futureItemID INTEGER NOT NULL,
+        PRIMARY KEY (futureItemID),
         FOREIGN KEY(futureItemID) REFERENCES Item(itemID)
     )
     ''')
